@@ -1,0 +1,205 @@
+	Компоненты
+
+ - Вывод одного компонента
+
+ 	function Car(props) {
+ 		return (
+ 			<div className="car">
+ 				<h3>{props.name}</h3>
+ 				<p>year: <strong> </strong>
+ 			</div>
+ 		)
+ 	}
+
+ 	ReactDOM.render(
+ 		<Car/>
+ 		document.querySelector("#root")
+ 	)
+
+ - Вывод сразу нескольких компонентов
+
+ 	function Car(props) {
+ 		return (
+ 			<div className="car">
+ 				<h3>{props.name}</h3>
+ 				<p>year: <strong> </strong>
+ 			</div>
+ 		)
+ 	}
+
+ 	const App = (
+ 		<div>
+ 			<Car name="Ford" year="2017 /">
+ 			<Car name="Audi" year="2015 /">
+ 			<Car name="Nissan" year="2012 /">
+ 		</div>
+ 	)
+
+ 	ReactDOM.render(
+ 		<App/>
+ 		document.querySelector("#root")
+ 	)
+
+ ------------------------------------------------------------------------------------------------
+
+ 	Create react App
+
+ npm install -g create-react-app
+ create-react-app name-project
+npm run start // для запуска проекта на локалке
+
+
+ ------------------------------------------------------------------------------------------------
+
+ Пишем реальный компонент
+
+ в App.js:
+
+ 	import Car from './Car/Car'
+
+ 	class App extends Component {
+ 		render (
+ 			<div>
+ 				<Car />
+ 			</div>
+ 		)
+ 	}
+
+в src/Car/Car.js:
+
+	import React from 'react'
+
+	export default () => (
+		<div>
+			<b>This is car component</b>
+		</div>
+	)
+
+ ------------------------------------------------------------------------------------------------
+
+ Вывод динамических данных
+
+ 	- Все что лежит в { } относиться к JS
+
+ 	Пример: <p> {1+1} </p> // 2
+
+ ------------------------------------------------------------------------------------------------
+
+
+ ---------- Основы реакта  ----------
+
+В реакте мы в основном работаем с двумя херянми:
+
+state - дланные, которые описывают компонент и которые мы можем менять.
+
+props = то что мы не можем менять.
+
+ Создание State
+ 	В обьекте state мы можем хранить данные которые описывают компонент
+
+ 	-Пример:
+
+ 		class App extends Component {
+
+ 			state = {
+ 				cars: [
+ 					{name: "Ford", year: 2018},
+ 					{name: "Audi", year: 2016},
+ 					{name: "Mazda", year: 2010},
+ 				],
+ 				pageTitle: "React components"
+ 			}
+
+	 		render() {
+
+	 			const cars = this.state.cars
+	 			
+	 			return (
+	 				<div>
+	 					<h1> {this.state.pageTitle} </h1>
+	 					<Car  name={ cars[0].name } year={ cars[0].year } />
+	 					<Car  name={ cars[1].name } year={ cars[1].year } />
+	 					<Car  name={ cars[2].name } year={ cars[2].year } />
+	 				</div>
+	 			)
+
+	 		}
+	 	}
+
+
+Обработка input
+
+	-пример:
+
+		handleInput = (event) => {
+			this.setState({
+				pageTittle: event.target.value
+			})
+		}
+
+
+		<h1> {this.state.pageTitle} </h1>
+
+		<input type="text" onChangr={ this.handleInput } />
+
+
+Вывод списков ( Цикл ):
+
+	- example:
+
+		{this.state.cars.map( (car, index) => {
+
+			return(
+				<Car 
+					key={index}
+					name={car.name}
+					year={car.year}
+					onChangeTitle={() => this.changeTitleHandler(car.name) }
+				/>
+			)
+
+		} )}
+
+условные операторы:
+
+	state = {
+ 		cars: [
+ 			{name: "Ford", year: 2018},
+ 			{name: "Audi", year: 2016},
+ 			{name: "Mazda", year: 2010},
+ 		],
+ 		pageTitle: "React components",
+ 		showCars: false // базовое значение
+ 	}
+
+ 	toggleCarsHandler = () => {
+ 		this.setState({
+ 			showCars: !this.state.showCars // Делаем инверсию ( меняет true на false и наооборот )
+ 		})
+ 	}
+
+=================================================================================================
+
+Стилизация компонентов:
+
+	- inline styles:
+
+		export default props => (
+			<div style={{
+				border: "1px solid green",
+				marginBottom: "10px",
+				display: "block"
+			}}>
+				<b>This is car component</b>
+			</div>
+		)
+
+	- Подключаем css:
+
+		в папке Car create Car.css:
+
+		в Car.js:
+
+			import "./Car.css"
+
+
